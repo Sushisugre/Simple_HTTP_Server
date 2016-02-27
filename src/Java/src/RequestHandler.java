@@ -10,6 +10,7 @@ import java.io.*;
 import java.net.Socket;
 
 public class RequestHandler implements Runnable {
+    private static final int BUFFER_SIZE = 2048;
     private String serverPath;
     private Socket clientSock;
 
@@ -84,12 +85,14 @@ public class RequestHandler implements Runnable {
             }
 
             // GET .. return entire file
-            System.out.println("read entire file");
-            BufferedReader reader = new BufferedReader(new FileReader(new File(
-                    filePath)));
-            char[] fileBuf = new char[512];
-            while (reader.read(fileBuf) != -1) {
-                outStream.writeBytes(String.valueOf(fileBuf));
+            // Use InputStream instead of reader, so image will be handle properly
+            BufferedInputStream fileStream = new BufferedInputStream(new FileInputStream(new File(filePath)));
+            byte[] fileBuf = new byte[BUFFER_SIZE];
+            long remain = length;
+            while (remain>0) {
+                int retVal = fileStream.read(fileBuf, 0, (remain>BUFFER_SIZE? BUFFER_SIZE:(int)remain));
+                outStream.write(fileBuf);
+                remain -= (retVal==-1?0:retVal);
             }
 
 				/*
