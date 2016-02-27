@@ -71,12 +71,12 @@ public class Client {
 						sock.getInputStream()));
 				/* Write the date to the server */
 				outStream = new DataOutputStream(sock.getOutputStream());
-				outStream.writeChars(buffer.toString());
+				outStream.writeBytes(buffer);
 				outStream.writeChar('\n');
 				outStream.flush();
 				/* Read the data echoed by the server */
 				buffer = inStream.readLine();
-				System.out.println("Received : " + buffer.toString());
+				System.out.println("Received : " + buffer);
 				/* Close the connection and wait for next input */
 				sock.close();
 			} catch (IOException e) {

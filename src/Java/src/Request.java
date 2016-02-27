@@ -1,29 +1,56 @@
+import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by s4keng on 2/26/16.
  */
 public class Request {
-    public String protocol;
-    public String version;
-    public Map<String, String> headers;
-    public RequestMethod method;
+    private String protocol;
+    private Map<String, String> headers;
+    private RequestMethod method;
+    private String uri;
+    private boolean isValid;
+
+    public Request() {
+        isValid = true;
+        headers = new HashMap<>();
+    }
 
     public static enum RequestMethod {
         HEAD,
         GET,
-        UNSUPPORTED;
+        POST;
 
-        public static RequestMethod fromString(String s) {
+        public static RequestMethod fromString(String s) throws IllegalArgumentException {
             RequestMethod method;
-            try {
-                method = RequestMethod.valueOf(s.toUpperCase());
-            }
-            catch (Exception e) {
-                method = UNSUPPORTED;
-            }
+            method = RequestMethod.valueOf(s.toUpperCase());
             return method;
         }
+
+        /**
+         * Check if a request method is valid
+         * @param test
+         * @return
+         */
+        public static boolean contains(String test) {
+
+            for (RequestMethod m : RequestMethod.values()) {
+//                System.out.println("Testing: method |"+m.name()+"|, input |"+test+"|");
+
+                if (m.name().trim().equals(test.trim())) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 
     public String getProtocol() {
@@ -38,7 +65,7 @@ public class Request {
         return method;
     }
 
-    public void setMethod(String method) {
+    public void setMethod(String method) throws IllegalArgumentException {
         this.method = RequestMethod.fromString(method);
     }
 
@@ -50,11 +77,12 @@ public class Request {
         headers.put(key, value);
     }
 
-    public String getVersion() {
-        return version;
+    public boolean isValid() {
+        return isValid;
     }
 
-    public void setVersion(String version) {
-        this.version = version;
+    public void setValid(boolean isValid) {
+        this.isValid = isValid;
     }
+
 }

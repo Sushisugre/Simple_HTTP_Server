@@ -16,6 +16,11 @@ public class GetMime {
 	public static String getMimeType(String fileUrl) throws java.io.IOException {
 		FileNameMap fileNameMap = URLConnection.getFileNameMap();
 		String type = fileNameMap.getContentTypeFor(fileUrl);
+
+		if (type == null && fileUrl.endsWith(".css")) {
+			type = "text/css";
+		}
+
 		return type;
 	}
 

@@ -7,7 +7,12 @@ JC = javac
 CLASSES = \
 	GetMime.java \
 	Server.java \
-	Client.java
+	Client.java \
+	Request.java \
+	RequestParser.java \
+	RequestHandler.java \
+	Response.java \
+	ResponseGenerator.java
 
 default: classes
 
