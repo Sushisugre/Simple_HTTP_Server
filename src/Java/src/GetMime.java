@@ -4,7 +4,10 @@
  * @author: Chinmay Kamat <chinmaykamat@cmu.edu>
  * 
  * @date: Feb 14, 2013 11:45:22 PM EST
- * 
+ *
+ * @update: Shi Su <shis@andrew.cmu.edu>
+ *
+ * @date: Sat Feb 27 16:43:36 EST 2016
  */
 
 import java.net.FileNameMap;
@@ -17,6 +20,7 @@ public class GetMime {
 		FileNameMap fileNameMap = URLConnection.getFileNameMap();
 		String type = fileNameMap.getContentTypeFor(fileUrl);
 
+		// getContentTypeFor return null for css files
 		if (type == null && fileUrl.endsWith(".css")) {
 			type = "text/css";
 		}

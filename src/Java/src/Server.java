@@ -11,13 +11,27 @@
  * @date: Fri Feb 26 17:57:49 EST 2016
  * 
  */
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Server {
+	/**
+	 * server socket
+	 */
 	private static ServerSocket srvSock;
+	/**
+	 * root path of server
+	 */
 	private static String path;
+	/**
+	 * Use a thread pool to limit number of connection
+	 */
+	private static ExecutorService threadPool =
+			Executors.newFixedThreadPool(20);
 
 	public static void main(String args[]) {
 		int port = 8080;
@@ -70,11 +84,12 @@ public class Server {
 
 				// handle the request in handler thread
 				RequestHandler handler = new RequestHandler(clientSock, path);
-				Thread thread = new Thread(handler);
-				thread.start();
+//				Thread thread = new Thread(handler);
+//				thread.start();
+
+				threadPool.execute(handler);
 
 			} catch (IOException e) {
-				continue;
 			}
 
 		}

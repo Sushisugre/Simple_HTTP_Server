@@ -1,3 +1,14 @@
+/**
+ * @file: RequestParser
+ *
+ * Parser the client input stream and get return an Request object
+ *
+ * @author: Shi Su <shis@andrew.cmu.edu>
+ *
+ * @date: Sat Feb 27 16:43:36 EST 2016
+ *
+ */
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,6 +17,13 @@ import java.nio.charset.StandardCharsets;
 
 public class RequestParser {
 
+    /**
+     * Parse client request
+     *
+     * @param clientInput socket input stream
+     * @return Request object
+     * @throws IOException
+     */
     public static Request parse(InputStream clientInput) throws IOException{
         String buffer;
         Request request = new Request();
@@ -17,10 +35,10 @@ public class RequestParser {
         buffer = inStream.readLine();
 
         if (buffer == null) {
-            return null;
+            request.setValid(false);
+            return request;
         }
 
-        System.out.println("Client send: "+buffer);
 
         String[] reqLine  = buffer.split(" ");
         if(reqLine.length < 3) {
@@ -30,20 +48,6 @@ public class RequestParser {
             return request;
         }
 
-//        System.out.println("test GET---");
-//        System.out.println(Request.RequestMethod.contains("GET"));
-//        System.out.println("test GET---");
-//
-//        System.out.println("test reqLine[0]---");
-//        System.out.println(Request.RequestMethod.contains(reqLine[0]));
-//        System.out.println("test reqLine[0]---");
-//
-//        System.out.println("GET equals reqLine[0]? " + reqLine[0].trim().equals("GET"));
-//
-//        String text = reqLine[0];
-//        System.out.println("test text---");
-//        System.out.println(Request.RequestMethod.contains(new String(reqLine[0])));
-//        System.out.println("test text---");
 
         // invalid method
         if(!Request.RequestMethod.contains(reqLine[0])) {
@@ -59,7 +63,12 @@ public class RequestParser {
             request.setValid(false);
             return request;
         }
-        request.setUri(reqLine[1]);
+
+        // if client request /, map to /index.html
+        if (reqLine[1].equals("/"))
+            request.setUri("/index.html");
+        else
+            request.setUri(reqLine[1]);
         System.out.println(request.getUri());
 
 
@@ -93,7 +102,6 @@ public class RequestParser {
             request.appendHeader(pair[0], pair[1]);
         }
 
-        System.out.println("finish parsing");
         return request;
     }
 }
