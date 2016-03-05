@@ -13,7 +13,7 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 
 public class RequestHandler implements Runnable {
-    private static final int BUFFER_SIZE = 2048;
+    private static final int BUFFER_SIZE = 1024 * 250;
     private String serverPath;
     private Socket clientSock;
 
@@ -34,7 +34,7 @@ public class RequestHandler implements Runnable {
             /**
              * For handling DOS attack: set client socket timeout after 5000s
              */
-            clientSock.setSoTimeout(5000);
+            clientSock.setSoTimeout(10000);
 
             // parse client request
             Request request = RequestParser.parse(clientSock.getInputStream());

@@ -37,6 +37,7 @@ public class ResponseGenerator {
         StringBuffer sb = new StringBuffer();
         sb.append(PROTOCOL+" "+ statue +"\r\n");
         sb.append("Server: Simple/1.0\r\n");
+        sb.append("Connection: close\r\n");
         sb.append("Content-Type: text/html\r\n");
         sb.append("\r\n");
         return sb.toString();
@@ -54,6 +55,7 @@ public class ResponseGenerator {
         sb.append("Server: Simple/1.0\r\n");
         sb.append("Content-Type: "+mime+"\r\n");
         sb.append("Content-Length: "+length+"\r\n");
+        sb.append("Connection: close\r\n");
         sb.append("\r\n");
         return sb.toString();
     }
