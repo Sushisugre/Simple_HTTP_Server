@@ -25,6 +25,10 @@ public class GetMime {
 			type = "text/css";
 		}
 
+        if (type == null && fileUrl.endsWith(".mp4")) {
+            type = "video/mp4";
+        }
+
 		return type;
 	}
 

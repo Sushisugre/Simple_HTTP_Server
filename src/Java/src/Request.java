@@ -2,7 +2,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by s4keng on 2/26/16.
+ * @file: Request.java
+ *
+ * Request Object
+ *
+ * @author: Shi Su <shis@andrew.cmu.edu>
+ *
+ * @date: Fri Feb 26 18:00:28 EST 2016
  */
 public class Request {
     private String protocol;
@@ -16,6 +22,9 @@ public class Request {
         headers = new HashMap<>();
     }
 
+    /**
+     * method in HTTP 1.0
+     */
     public static enum RequestMethod {
         HEAD,
         GET,

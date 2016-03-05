@@ -1,9 +1,20 @@
 /**
- * Created by s4keng on 2/26/16.
+ * @file: ResponseGenerator
+ *
+ * Generate response for client
+ *
+ * @author: Shi Su <shis@andrew.cmu.edu>
+ *
+ * @date: Sat Feb 27 21:02:07 EST 2016
  */
 public class ResponseGenerator {
     private static final String PROTOCOL = "HTTP/1.0";
 
+    /**
+     * Generate Error page
+     * @param statue response status
+     * @return String
+     */
     public static String getErr(String statue) {
         StringBuffer sb = new StringBuffer();
         sb.append(getErrHeader(statue));
@@ -17,6 +28,11 @@ public class ResponseGenerator {
         return sb.toString();
     }
 
+    /**
+     * Generate Error header
+     * @param statue response status
+     * @return String
+     */
     public static String getErrHeader(String statue) {
         StringBuffer sb = new StringBuffer();
         sb.append(PROTOCOL+" "+ statue +"\r\n");
@@ -26,6 +42,12 @@ public class ResponseGenerator {
         return sb.toString();
     }
 
+    /**
+     * Generate header for successful request
+     * @param mime mimeType
+     * @param length content length
+     * @return String
+     */
     public static String getSuccessHeader(String mime, long length) {
         StringBuffer sb = new StringBuffer();
         sb.append(PROTOCOL+" 200 OK\r\n");

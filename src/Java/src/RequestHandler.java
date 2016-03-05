@@ -31,7 +31,9 @@ public class RequestHandler implements Runnable {
                     + clientSock.getPort());
 
             String buffer;
-            // set client socket timeout after 5000s
+            /**
+             * For handling DOS attack: set client socket timeout after 5000s
+             */
             clientSock.setSoTimeout(5000);
 
             // parse client request
@@ -63,13 +65,14 @@ public class RequestHandler implements Runnable {
 
             // HTTP 1.0 only contains get/head/post, and post is unimplemented
             if (Request.RequestMethod.POST.equals(request.getMethod())) {
-                buffer = ResponseGenerator.getErr(Response.METHOD_UMIMPLEMENTED);
+                buffer = ResponseGenerator.getErr(Response.METHOD_UNIMPLEMENTED);
                 outStream.writeBytes(buffer);
                 outStream.flush();
                 clientSock.close();
                 return;
             }
 
+            // file not found, return 404
             String filePath = serverPath + request.getUri();
             File file = new File(filePath);
             if (!file.exists()) {
@@ -128,7 +131,10 @@ public class RequestHandler implements Runnable {
             /* Interaction with this client complete, close() the socket */
             clientSock.close();
         } catch (SocketTimeoutException e) {
-            // fail to get any data client socket within timeout, terminate it
+            /**
+             * For handling DOS attack: set client socket timeout after 5000s
+             * fail to get any data client socket within timeout, terminate it
+             */
             System.err.println("SocketTimeOut for:" + clientSock.getInetAddress()+":"+clientSock.getPort());
             try{
                 clientSock.close();

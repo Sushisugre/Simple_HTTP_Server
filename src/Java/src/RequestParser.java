@@ -82,6 +82,7 @@ public class RequestParser {
         System.out.println(request.getProtocol());
 
 
+        // if no header return
         if(!inStream.ready()) {
             return request;
         }
