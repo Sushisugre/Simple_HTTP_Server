@@ -80,7 +80,6 @@ public class Client {
 				/* Close the connection and wait for next input */
 				sock.close();
 			} catch (IOException e) {
-				continue;
 			}
 		}
 	}

@@ -25,7 +25,7 @@ public class Request {
     /**
      * method in HTTP 1.0
      */
-    public static enum RequestMethod {
+    public enum RequestMethod {
         HEAD,
         GET,
         POST;
@@ -38,13 +38,12 @@ public class Request {
 
         /**
          * Check if a request method is valid
-         * @param test
-         * @return
+         * @param test method string
+         * @return is valid method
          */
         public static boolean contains(String test) {
 
             for (RequestMethod m : RequestMethod.values()) {
-//                System.out.println("Testing: method |"+m.name()+"|, input |"+test+"|");
 
                 if (m.name().trim().equals(test.trim())) {
                     return true;

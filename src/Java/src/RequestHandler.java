@@ -138,7 +138,7 @@ public class RequestHandler implements Runnable {
             System.err.println("SocketTimeOut for:" + clientSock.getInetAddress()+":"+clientSock.getPort());
             try{
                 clientSock.close();
-            }catch (Exception excetpion){}
+            }catch (Exception exception){}
 
         } catch (IOException e) {
             clientSock = null;

@@ -24,10 +24,6 @@ public class Simple {
 	 */
 	private static ServerSocket srvSock;
 	/**
-	 * root path of server
-	 */
-	private static String path;
-	/**
 	 * Use a thread pool to limit number of connection
 	 */
 	private static ExecutorService threadPool =
@@ -55,7 +51,7 @@ public class Simple {
 		}
 
 		// working path of server
-		path = args[1];
+		String path = args[1];
 
 		try {
 			/*
@@ -78,14 +74,12 @@ public class Simple {
 				 * accepted on srvSock
 				 */
 				clientSock = srvSock.accept();
-				System.out.println("Accpeted new connection from "
+				System.out.println("Accepted new connection from "
 						+ clientSock.getInetAddress() + ":"
 						+ clientSock.getPort());
 
 				// handle the request in handler thread
 				RequestHandler handler = new RequestHandler(clientSock, path);
-//				Thread thread = new Thread(handler);
-//				thread.start();
 
 				threadPool.execute(handler);
 
